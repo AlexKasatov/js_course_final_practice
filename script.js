@@ -1,4 +1,6 @@
-window.addEventListener("load", function () {});
+document.onload = function () {
+  window.location = "index.html";
+};
 
 class Person {
   constructor(name) {
@@ -39,11 +41,10 @@ class Person {
       var DATA = JSON.parse(xhr.responseText);
       var currentTemp = DATA.main.temp - 273;
       console.log("Температура в Москве = " + currentTemp);
+
+      currentTemp >= 16 ? ++this.happiness : this.happiness;
+      return this.happiness;
     }
-
-    currentTemp >= 16 ? ++this.happiness : this.happiness;
-
-    return this.happiness;
   }
 }
 
@@ -57,16 +58,9 @@ form.onsubmit = function (e) {
   var haveRest = document.getElementById("restYes");
   var hasMoney = document.getElementById("moneyYes");
 
-  class User extends Person {
-    constructor(name) {
-      super();
-      this.name = nameValue;
-    }
-  }
-
-  var newUser = new User(); //создаем пермеенную с нашим новым юзером
+  var newUser = new Person(); //создаем пермеенную с нашим новым юзером
+  newUser.name = nameValue;
   newUser.isSunny(); // проверяем погоду
-  
 
   //делаем проверки выбрано ли "Да" для вызова методов
   if (hasCatRadio.checked) {
@@ -83,22 +77,26 @@ form.onsubmit = function (e) {
 
   var icon = document.querySelector(".icon");
   var personName = document.querySelector(".personName");
+  personName.textContent = newUser.name;
   console.log("Настроение нашего юзера = " + newUser.happiness);
 
   //делаем проверки на количество счастья и вставляем соответствующий смайл
-  personName.textContent = newUser.name;
+
   switch (newUser.happiness) {
     case 4:
       icon.textContent = "😁";
       break;
 
-    case 3 || 2:
+    case 3:
+    case 2:
       icon.textContent = "😐";
       break;
 
-    case 1 || 0:
+    case 1:
+    case 0:
       icon.textContent = "😓";
       break;
+
     default:
       icon.textContent = "😓";
       break;
